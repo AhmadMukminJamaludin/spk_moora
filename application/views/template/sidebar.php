@@ -35,7 +35,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="asset/dist/img/admin1_1.jpg" class="img-circle" alt="User Image">
+          <img src="<?= base_url('asset/') ?>dist/img/admin1_1.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Admin</p>

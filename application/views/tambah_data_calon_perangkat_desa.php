@@ -2,6 +2,7 @@
   <div class="content-wrapper" style="background-color: #C0C0C0">
     <!-- Content Header (Page header) -->
     <section class="content-header" style="background-color: #C0C0C0">
+    <?= $this->session->flashdata('message'); ?>
       <h1>
         Tambah Data Calon Perangkat Desa
       </h1>
@@ -21,9 +22,9 @@
             <div class="control-group">
               <label class="control-label">Nama :</label>
               <div class="controls">
-                <select name="nama" class="form-control">
+                <select name="id" class="form-control">
                 <?php foreach ($data_calon as $row) : ?>
-                <option value="<?= $row['nama_user'] ?>"><?= $row['nama_user'] ?></option>
+                <option value="<?= $row['id_user'] ?>"><?= $row['nama_user'] ?></option>
                 <?php endforeach; ?>
                 </select>
               </div>

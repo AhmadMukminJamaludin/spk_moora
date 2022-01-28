@@ -7,6 +7,7 @@ class calon_perangkat_desa extends CI_Controller {
 		parent::__construct(); 
 		$this->load->helper('url');
 		$this->load->library('session');
+		$this->load->library('form_validation');
 		$this->load->model('Users_db');
 		$this->load->helper(array('form', 'url'));
 		
@@ -57,24 +58,49 @@ class calon_perangkat_desa extends CI_Controller {
 		if(!$this->session->logged_in){
 			redirect("Login");
 		}
-		$data = [
-			'nama'	=> $this->input->post('nama'),
-			'alamat' 	=> $this->input->post('alamat'),
-			'tanggal_lahir' => $this->input->post('tanggal_lahir'),
-			'jenis_kelamin'	=> $this->input->post('jenis_kelamin'),
-			'no_hp'	=> $this->input->post('no_hp'),
-			'posisi'	=> $this->input->post('posisi'),
-		];
 
-		$this->db->insert('calon_perangkat_desa', $data);
-		$this->session->set_flashdata('message',
-					'<div class="alert alert-success" role="alert">
-						Data calon berhasil ditambah!
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>');
-		redirect(base_url('calon_perangkat_desa'));
+		$this->form_validation->set_rules('id', 'id', 'required|is_unique[calon_perangkat_desa.user_id]',[
+		   	'is_unique'	  => 'Nama calon sudah terdaftar.' 
+		]);
+		if($this->form_validation->run() == FALSE){
+			if(!$this->session->logged_in){
+				redirect("Login");
+			}
+			$data['page'] = "data_calon_perangkat_desa";
+			$data['base_url'] = base_url();
+			$data['data_calon'] = $this->db->get_where('user', ['level' => 'user'])->result_array();
+			$this->session->set_flashdata('message',
+						'<div class="alert alert-danger" role="alert">
+							Nama calon sudah terdaftar!
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>');
+			$this->load->view('template/header',$data);
+			$this->load->view('template/sidebar',$data);	
+			$this->load->view('tambah_data_calon_perangkat_desa',$data);
+			$this->load->view('template/footer',$data);
+		}else {
+			$data = [
+				'user_id'	=> $this->input->post('id'),
+				'alamat' 	=> $this->input->post('alamat'),
+				'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+				'jenis_kelamin'	=> $this->input->post('jenis_kelamin'),
+				'no_hp'	=> $this->input->post('no_hp'),
+				'posisi'	=> $this->input->post('posisi'),
+			];
+	
+			$this->db->insert('calon_perangkat_desa', $data);
+			$this->session->set_flashdata('message',
+						'<div class="alert alert-success" role="alert">
+							Data calon berhasil ditambah!
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>');
+			redirect(base_url('calon_perangkat_desa'));
+		}
+		
           
        }
 
