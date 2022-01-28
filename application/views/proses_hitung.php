@@ -364,7 +364,7 @@
                   </tr>
                   <?php
                   $val = ($y1[$a]+$y2[$a]+$y4[$a]+$y5[$a]+$y6[$a]) - $y3[$a];
-                  $save = $this->db->query("INSERT INTO rangking (nama,user_id,nilai,tahun) values ('$key->nama','$key->user_id','$val','$tahun')");
+                  $save = $this->db->query("INSERT INTO rangking (user_id,nilai,tahun) values ('$key->user_id','$val','$tahun')");
                   $a++;
                 }
               }
@@ -437,7 +437,7 @@
             
             if(count($get_kandidat) > 0){
               foreach ($get_kandidat as $row) {
-                echo "<p>".$row->nama." Terpilih sebagai kandidat calon perangkat desa dengan posisi ".$row->posisi."</p>";
+                echo "<strong>".$row->nama_user." Terpilih sebagai kandidat calon perangkat desa dengan posisi ".$row->posisi."</strong>";
               }
             }
             ?>

@@ -2,6 +2,7 @@
   <div class="content-wrapper" style="background-color: #C0C0C0">
     <!-- Content Header (Page header) -->
     <section class="content-header" style="background-color: #C0C0C0">
+    <?= $this->session->flashdata('message'); ?>
       <h1>
         Tambah Alternatif Kriteria
       </h1>
@@ -22,14 +23,10 @@
             <div class="control-group">
               <label class="control-label">Nama Calon Perangkat Desa</label>
               <div class="controls">
-                <select name="nama" data-placeholder="Pilih calon_perangkat_desa..." class="form-control">
-                  <?php 
-                  foreach ($calon_perangkat_desa as $data) {
-                  ?>
-                    <option value="<?php echo $data->nama; ?>" ><?php echo $data->nama; ?></option>
-                    <?php
-                  }
-                  ?>
+              <select name="id" class="form-control">
+                <?php foreach ($data_calon as $row) : ?>
+                <option value="<?= $row['id_user'] ?>"><?= $row['nama_user'] ?></option>
+                <?php endforeach; ?>
                 </select>
               </div>
             </div>
